@@ -80,12 +80,7 @@ The admin dashboard now includes a comprehensive analytics section that provides
    PORT=5000
    ```
 
-4. **Seed the database with sample data**
-   ```bash
-   npm run seed
-   ```
-
-5. **Start the backend server**
+4. **Start the backend server**
    ```bash
    npm run dev
    ```
@@ -114,20 +109,3 @@ The admin dashboard now includes a comprehensive analytics section that provides
 - Monitor user engagement through comments
 - Analyze geographic distribution of scientists
 
-## API Endpoints
-
-### Admin Analytics
-- `GET /api/admin/analytics` - Get analytics data (requires admin authentication)
-
-### Other endpoints available for scientists, news, and comments management
-
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Submit a pull request
-
-## License
-
-This project is licensed under the ISC License.
