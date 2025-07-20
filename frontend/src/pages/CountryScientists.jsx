@@ -63,6 +63,7 @@
 import { useParams, Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import StarButton from '../components/StarButton';
 
 export default function CountryScientists({ countryOverride }) {
   const params = useParams();
@@ -323,7 +324,6 @@ export default function CountryScientists({ countryOverride }) {
                   key={scientist._id}
                   className="group block transform transition-all duration-500 hover:scale-105 animate-fade-in-up"
                   style={{ animationDelay: `${index * 0.1}s` }}
-                  {...(countryOverride ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
                 >
                   <div className="relative bg-white/5 backdrop-blur-md border border-white/10 rounded-3xl p-6 h-full hover:bg-white/10 hover:border-white/20 transition-all duration-300 overflow-hidden">
                     {/* Card Background Effect */}
@@ -357,11 +357,13 @@ export default function CountryScientists({ countryOverride }) {
                         </p>
                       </div>
 
-                      {/* Hover Effect Icon */}
-                      <div className="absolute top-4 right-4 w-8 h-8 bg-white/20 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-x-2 group-hover:translate-x-0">
-                        <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                        </svg>
+                      {/* Star Button */}
+                      <div className="absolute top-4 right-4">
+                        <StarButton
+                          type="scientist"
+                          itemId={scientist._id}
+                          size="medium"
+                        />
                       </div>
                     </div>
                   </div>

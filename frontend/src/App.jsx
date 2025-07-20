@@ -4,6 +4,8 @@ import CountryScientists from './pages/CountryScientists';
 import ScientistProfile from './pages/ScientistProfile';
 import NewsList from './pages/NewsList';
 import NewsArticle from './pages/NewsArticle';
+import Favorites from './pages/Favorites';
+import SpaceFacts from './pages/SpaceFacts';
 import AdminLogin from './pages/AdminLogin';
 import AdminDashboard from './pages/AdminDashboard';
 import { ToastContainer } from 'react-toastify';
@@ -20,6 +22,8 @@ function App() {
           <Route path="/scientist/:id" element={<ScientistProfile />} />
           <Route path="/news" element={<NewsList />} />
           <Route path="/news/:id" element={<NewsArticle />} />
+          <Route path="/favorites" element={<Favorites />} />
+          <Route path="/space-facts" element={<SpaceFacts />} />
           <Route path="/admin/login" element={<AdminLogin />} />
           <Route path="/admin/dashboard/*" element={<AdminDashboard />} />
         </Routes>

@@ -58,6 +58,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import StarButton from '../components/StarButton';
 
 function SearchBar({ value, onChange, placeholder }) {
   return (
@@ -338,10 +339,15 @@ export default function NewsList() {
                             }}
                           />
                           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
-                          <div className="absolute top-4 right-4">
+                          <div className="absolute top-4 right-4 flex items-center gap-2">
                             <div className="bg-blue-500/80 backdrop-blur-sm text-white text-xs px-3 py-1 rounded-full font-medium">
                               NEWS
                             </div>
+                            <StarButton
+                              type="news"
+                              itemId={article._id}
+                              size="small"
+                            />
                           </div>
                         </div>
 

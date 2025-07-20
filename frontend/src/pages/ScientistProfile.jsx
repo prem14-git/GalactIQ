@@ -54,6 +54,7 @@ import { useParams, Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import CommentSection from '../components/CommentSection';
+import StarButton from '../components/StarButton';
 
 export default function ScientistProfile() {
   const { id } = useParams();
@@ -320,9 +321,16 @@ export default function ScientistProfile() {
 
               {/* Hero Section */}
               <div className="text-center mb-12 transform animate-fade-in-up">
-                <h1 className="text-5xl md:text-6xl font-bold mb-4 bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent animate-glow">
-                  {scientist.name}
-                </h1>
+                <div className="flex items-center justify-center gap-4 mb-4">
+                  <h1 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent animate-glow">
+                    {scientist.name}
+                  </h1>
+                  <StarButton
+                    type="scientist"
+                    itemId={scientist._id}
+                    size="large"
+                  />
+                </div>
                 <div className="w-48 h-1 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto rounded-full animate-expand"></div>
               </div>
 

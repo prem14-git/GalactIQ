@@ -54,6 +54,7 @@ import { useParams, Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import CommentSection from '../components/CommentSection';
+import StarButton from '../components/StarButton';
 
 export default function NewsArticle() {
   const { id } = useParams();
@@ -322,9 +323,16 @@ export default function NewsArticle() {
 
               {/* Hero Section */}
               <div className="text-center mb-12 transform animate-fade-in-up">
-                <h1 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-green-400 via-blue-400 to-purple-400 bg-clip-text text-transparent animate-glow">
-                  {article.title}
-                </h1>
+                <div className="flex items-center justify-center gap-4 mb-4">
+                  <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-green-400 via-blue-400 to-purple-400 bg-clip-text text-transparent animate-glow">
+                    {article.title}
+                  </h1>
+                  <StarButton
+                    type="news"
+                    itemId={article._id}
+                    size="large"
+                  />
+                </div>
                 <div className="w-48 h-1 bg-gradient-to-r from-green-500 to-blue-500 mx-auto rounded-full animate-expand"></div>
                 <p className="text-white/70 mt-4 text-lg">
                   {new Date(article.date).toLocaleDateString('en-US', { 

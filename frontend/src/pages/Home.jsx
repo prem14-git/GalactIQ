@@ -103,7 +103,7 @@
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import Header from '../components/Header';
-import { Rocket, Star, Globe, Zap, Sparkles, Moon, Sun, Satellite, Orbit, Telescope } from 'lucide-react';
+import { Rocket, Star, Globe, Zap, Sparkles, Moon, Sun, Satellite, Orbit, Telescope, Brain } from 'lucide-react';
 
 const countries = [
   'USA', 'Russia', 'China', 'India', 'UK', 'France', 'Germany', 'Japan', 'Canada', 'Italy'
@@ -214,11 +214,79 @@ const ParticleOrbit = ({ size = 'small', color = 'blue', delay = 0 }) => {
 };
 
 export default function Home() {
+  const [showRocketAnimation, setShowRocketAnimation] = useState(true);
+
+  // Hide rocket animation after 4 seconds
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowRocketAnimation(false);
+    }, 4000);
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <div className="relative min-h-screen bg-gradient-to-b from-gray-900 via-blue-900 to-purple-900 overflow-hidden">
       {/* Header */}
       <Header />
+      
+      {/* Rocket Launch Animation */}
+      {showRocketAnimation && (
+        <div className="fixed inset-0 z-50 pointer-events-none">
+          {/* Rocket */}
+          <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 animate-rocket-launch">
+            <div className="relative">
+              {/* Rocket Body */}
+              <div className="w-8 h-24 bg-gradient-to-b from-white via-gray-200 to-gray-300 rounded-t-full relative">
+                {/* Rocket Windows */}
+                <div className="absolute top-4 left-1/2 transform -translate-x-1/2 w-4 h-4 bg-blue-400 rounded-full"></div>
+                <div className="absolute top-8 left-1/2 transform -translate-x-1/2 w-4 h-4 bg-blue-400 rounded-full"></div>
+                
+                {/* Rocket Fins */}
+                <div className="absolute bottom-0 left-0 w-3 h-6 bg-red-500 transform -skew-x-12"></div>
+                <div className="absolute bottom-0 right-0 w-3 h-6 bg-red-500 transform skew-x-12"></div>
+                
+                {/* Rocket Tip */}
+                <div className="absolute -top-2 left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-b-8 border-l-transparent border-r-transparent border-b-white"></div>
+              </div>
+              
+              {/* Engine Fire */}
+              <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2">
+                <div className="w-6 h-8 bg-gradient-to-t from-orange-500 via-yellow-400 to-transparent rounded-b-full animate-pulse"></div>
+                <div className="w-4 h-6 bg-gradient-to-t from-red-500 via-orange-400 to-transparent rounded-b-full animate-pulse" style={{ animationDelay: '0.2s' }}></div>
+              </div>
+            </div>
+          </div>
+          
+          {/* Smoke Trail */}
+          <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2">
+            <div className="w-12 h-32 bg-gradient-to-t from-gray-400 via-gray-300 to-transparent rounded-t-full animate-smoke-rise opacity-60"></div>
+            <div className="w-8 h-24 bg-gradient-to-t from-gray-500 via-gray-400 to-transparent rounded-t-full animate-smoke-rise opacity-40" style={{ animationDelay: '0.5s' }}></div>
+          </div>
+          
+          {/* Launch Platform */}
+          <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2">
+            <div className="w-20 h-4 bg-gradient-to-r from-gray-600 to-gray-800 rounded-t-full"></div>
+            <div className="w-16 h-2 bg-gradient-to-r from-gray-700 to-gray-900 rounded-t-full"></div>
+          </div>
+          
+          {/* Particle Effects */}
+          <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2">
+            {Array.from({ length: 20 }, (_, i) => (
+              <div
+                key={i}
+                className="absolute w-2 h-2 bg-yellow-400 rounded-full animate-particle-spread"
+                style={{
+                  left: `${Math.random() * 40 - 20}px`,
+                  animationDelay: `${Math.random() * 2}s`,
+                  animationDuration: `${1 + Math.random()}s`
+                }}
+              />
+            ))}
+          </div>
+          
+
+        </div>
+      )}
       
       {/* Animated Background */}
       <div className="absolute inset-0">
@@ -324,19 +392,24 @@ export default function Home() {
             </div>
           </div>
 
-          {/* News Button */}
-          <div className="transform hover:scale-105 transition-all duration-300 mb-12">
-            <Link
-              to="/news"
-              className="group relative overflow-hidden bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 text-white px-16 py-6 rounded-full shadow-2xl hover:shadow-emerald-500/30 transition-all duration-300 border-2 border-emerald-400/50 hover:border-emerald-300 text-2xl font-bold"
-            >
-              <div className="absolute inset-0 bg-gradient-to-r from-emerald-400/20 to-cyan-400/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-              <div className="relative z-10 flex items-center gap-4">
-                <Star className="w-8 h-8 group-hover:rotate-180 transition-transform duration-500" />
-                🌟 View Space News
-                <Sparkles className="w-8 h-8 group-hover:animate-spin transition-transform duration-500" />
-              </div>
-            </Link>
+          {/* Action Buttons */}
+          <div className="flex flex-col md:flex-row gap-6 mb-12">
+            {/* News Button */}
+            <div className="transform hover:scale-105 transition-all duration-300">
+              <Link
+                to="/news"
+                className="group relative overflow-hidden bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 text-white px-16 py-6 rounded-full shadow-2xl hover:shadow-emerald-500/30 transition-all duration-300 border-2 border-emerald-400/50 hover:border-emerald-300 text-2xl font-bold"
+              >
+                <div className="absolute inset-0 bg-gradient-to-r from-emerald-400/20 to-cyan-400/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div className="relative z-10 flex items-center gap-4">
+                  <Star className="w-8 h-8 group-hover:rotate-180 transition-transform duration-500" />
+                  🌟 View Space News
+                  <Sparkles className="w-8 h-8 group-hover:animate-spin transition-transform duration-500" />
+                </div>
+              </Link>
+            </div>
+
+
           </div>
 
           {/* Extra Content for Scrolling */}
@@ -395,6 +468,72 @@ export default function Home() {
         @keyframes glow-rotate {
           0% { filter: hue-rotate(0deg); }
           100% { filter: hue-rotate(360deg); }
+        }
+        
+        /* Rocket Launch Animations */
+        @keyframes rocket-launch {
+          0% {
+            transform: translate(-50%, 0) scale(1);
+            opacity: 1;
+          }
+          20% {
+            transform: translate(-50%, -20vh) scale(1.1);
+            opacity: 1;
+          }
+          40% {
+            transform: translate(-50%, -40vh) scale(1.2);
+            opacity: 1;
+          }
+          60% {
+            transform: translate(-50%, -60vh) scale(1.3);
+            opacity: 0.8;
+          }
+          80% {
+            transform: translate(-50%, -80vh) scale(1.4);
+            opacity: 0.6;
+          }
+          100% {
+            transform: translate(-50%, -100vh) scale(1.5);
+            opacity: 0;
+          }
+        }
+        
+        @keyframes smoke-rise {
+          0% {
+            transform: translateY(0) scale(1);
+            opacity: 0.8;
+          }
+          50% {
+            transform: translateY(-50vh) scale(1.5);
+            opacity: 0.4;
+          }
+          100% {
+            transform: translateY(-100vh) scale(2);
+            opacity: 0;
+          }
+        }
+        
+        @keyframes particle-spread {
+          0% {
+            transform: translateY(0) scale(1);
+            opacity: 1;
+          }
+          100% {
+            transform: translateY(-100px) translateX(var(--spread-x, 0)) scale(0);
+            opacity: 0;
+          }
+        }
+        
+        .animate-rocket-launch {
+          animation: rocket-launch 4s ease-out forwards;
+        }
+        
+        .animate-smoke-rise {
+          animation: smoke-rise 3s ease-out forwards;
+        }
+        
+        .animate-particle-spread {
+          animation: particle-spread 2s ease-out forwards;
         }
         
         /* Cosmic Scrollbar Styling */
