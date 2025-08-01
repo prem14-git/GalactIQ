@@ -73,6 +73,7 @@ export default function CountryScientists({ countryOverride }) {
   const [error, setError] = useState(null);
   const [search, setSearch] = useState('');
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [favoriteIds, setFavoriteIds] = useState([]);
 
   // Mouse tracking for parallax effect
   useEffect(() => {
@@ -82,12 +83,11 @@ export default function CountryScientists({ countryOverride }) {
         y: (e.clientY - window.innerHeight / 2) / 50
       });
     };
-
     window.addEventListener('mousemove', handleMouseMove);
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
 
-  // Original API call logic
+  // Fetch scientists
   useEffect(() => {
     setLoading(true);
     setError(null);
@@ -101,6 +101,30 @@ export default function CountryScientists({ countryOverride }) {
         setLoading(false);
       });
   }, [country, search]);
+
+  // Fetch user's favorite scientist IDs
+  useEffect(() => {
+    const token = localStorage.getItem('userToken');
+    if (!token) return;
+    axios.get('/api/users/favorites', {
+      headers: { Authorization: `Bearer ${token}` }
+    })
+      .then(res => {
+        setFavoriteIds(res.data.scientists.map(s => s._id));
+      })
+      .catch(() => {});
+  }, [country]);
+
+  // Handle star toggle
+  const handleStarToggle = (type, itemId, isFavorite) => {
+    setFavoriteIds(prev => {
+      if (isFavorite) {
+        return [...prev, itemId];
+      } else {
+        return prev.filter(id => id !== itemId);
+      }
+    });
+  };
 
   // Generate random stars
   const generateStars = () => {
@@ -363,6 +387,8 @@ export default function CountryScientists({ countryOverride }) {
                           type="scientist"
                           itemId={scientist._id}
                           size="medium"
+                          initialFavorited={favoriteIds.includes(scientist._id)}
+                          onToggle={handleStarToggle}
                         />
                       </div>
                     </div>
@@ -383,7 +409,7 @@ export default function CountryScientists({ countryOverride }) {
           {/* Back to Home Button */}
           <div className="text-center">
             <Link 
-              to="/" 
+              to="/home" 
               className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-blue-500 to-purple-500 text-white font-semibold rounded-full hover:from-blue-600 hover:to-purple-600 transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-blue-500/25"
             >
               <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">

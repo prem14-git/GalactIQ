@@ -48,7 +48,7 @@
 //         ))}
 //       </div>
 //       <div className="mt-8">
-//         <Link to="/" className="text-green-500 hover:underline">&larr; Back to Home</Link>
+//         <Link to="/home" className="text-green-500 hover:underline">&larr; Back to Home</Link>
 //       </div>
 //     </div>
 //   );
@@ -392,7 +392,7 @@ export default function NewsList() {
           {/* Back to Home */}
           <div className="text-center">
             <Link
-              to="/"
+              to="/home"
               className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-purple-500 to-blue-500 text-white font-semibold rounded-2xl hover:from-purple-600 hover:to-blue-600 transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-purple-500/25"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

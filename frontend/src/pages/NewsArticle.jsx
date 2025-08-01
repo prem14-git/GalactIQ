@@ -325,8 +325,8 @@ export default function NewsArticle() {
               <div className="text-center mb-12 transform animate-fade-in-up">
                 <div className="flex items-center justify-center gap-4 mb-4">
                   <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-green-400 via-blue-400 to-purple-400 bg-clip-text text-transparent animate-glow">
-                    {article.title}
-                  </h1>
+                  {article.title}
+                </h1>
                   <StarButton
                     type="news"
                     itemId={article._id}

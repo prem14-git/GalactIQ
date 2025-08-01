@@ -117,18 +117,18 @@ export default function AdminDashboard() {
 
           {/* Sidebar Footer */}
           <div className="p-4 border-t border-gray-200">
-            <button
-              onClick={handleLogout}
+          <button
+            onClick={handleLogout}
               className="w-full flex items-center gap-3 px-4 py-3 rounded-lg font-medium text-red-600 hover:bg-red-50 transition-all duration-200"
               title={!sidebarOpen ? 'Logout' : ''}
-            >
+          >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
               </svg>
               <span className={`transition-opacity duration-300 ${!sidebarOpen ? 'lg:opacity-0 lg:hidden' : ''}`}>
-                Logout
+            Logout
               </span>
-            </button>
+          </button>
           </div>
         </div>
       </div>
@@ -151,45 +151,45 @@ export default function AdminDashboard() {
               <h1 className="text-lg font-bold text-blue-800">Admin Panel</h1>
             </div>
             <div className="w-10"></div> {/* Spacer for centering */}
-          </div>
+        </div>
         </header>
 
         {/* Content Area */}
         <main className="flex-1 p-6 overflow-auto">
           <div className="max-w-6xl mx-auto">
-            {activeTab === 'dashboard' && (
+          {activeTab === 'dashboard' && (
               <div className="bg-white rounded-lg shadow p-6">
                 <h2 className="text-2xl font-bold text-gray-800 mb-4">Welcome to Admin Dashboard</h2>
                 <p className="text-gray-600">Select an option from the sidebar to manage your content or view analytics.</p>
               </div>
-            )}
-            {activeTab === 'analytics' && <Analytics />}
-            {activeTab === 'scientists' && <ManageScientists />}
-            {activeTab === 'news' && <ManageNews />}
-            {activeTab === 'comments' && <ManageComments />}
-            {activeTab === 'browse_scientists' && (
+          )}
+          {activeTab === 'analytics' && <Analytics />}
+          {activeTab === 'scientists' && <ManageScientists />}
+          {activeTab === 'news' && <ManageNews />}
+          {activeTab === 'comments' && <ManageComments />}
+          {activeTab === 'browse_scientists' && (
               <div className="bg-white rounded-lg shadow p-6">
                 <div className="mb-6">
                   <label className="block mb-2 font-semibold text-gray-700">Select Country</label>
-                  <select
+                <select
                     className="border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    value={browseCountry}
-                    onChange={e => setBrowseCountry(e.target.value)}
-                  >
-                    {['USA', 'Russia', 'China', 'India', 'UK', 'France', 'Germany', 'Japan', 'Canada', 'Italy'].map(c => (
-                      <option key={c} value={c}>{c}</option>
-                    ))}
-                  </select>
-                </div>
+                  value={browseCountry}
+                  onChange={e => setBrowseCountry(e.target.value)}
+                >
+                  {['USA', 'Russia', 'China', 'India', 'UK', 'France', 'Germany', 'Japan', 'Canada', 'Italy'].map(c => (
+                    <option key={c} value={c}>{c}</option>
+                  ))}
+                </select>
+              </div>
                 <AdminCountryScientists key={browseCountry} countryOverride={browseCountry} />
               </div>
             )}
             {activeTab === 'browse_news' && (
               <div className="bg-white rounded-lg shadow p-6">
                 <AdminNewsList />
-              </div>
-            )}
-          </div>
+            </div>
+          )}
+        </div>
         </main>
       </div>
 

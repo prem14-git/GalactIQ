@@ -76,6 +76,16 @@ export default function Header() {
                     </svg>
                     Space Facts
                   </Link>
+                  <Link
+                    to="/quiz"
+                    className="text-purple-500 hover:text-white transition-colors duration-200 font-medium cursor-pointer flex items-center gap-2"
+                  >
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2" fill="none" />
+                      <path d="M8 15h8M8 12h8M8 9h8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                    </svg>
+                    Quiz
+                  </Link>
                   <span className="text-cyan-400 font-medium">Hello, {user.username}</span>
                   <button
                     onClick={handleLogout}

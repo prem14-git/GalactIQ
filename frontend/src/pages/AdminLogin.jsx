@@ -61,7 +61,7 @@ export default function AdminLogin() {
         {/* Back to Homepage Button */}
         <div className="mt-6 text-center">
           <button
-            onClick={() => navigate('/')}
+            onClick={() => navigate('/home')}
             className="text-gray-600 hover:text-blue-600 transition-colors text-sm underline"
           >
             ← Back to Homepage

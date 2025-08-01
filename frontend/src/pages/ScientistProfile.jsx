@@ -323,8 +323,8 @@ export default function ScientistProfile() {
               <div className="text-center mb-12 transform animate-fade-in-up">
                 <div className="flex items-center justify-center gap-4 mb-4">
                   <h1 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent animate-glow">
-                    {scientist.name}
-                  </h1>
+                  {scientist.name}
+                </h1>
                   <StarButton
                     type="scientist"
                     itemId={scientist._id}

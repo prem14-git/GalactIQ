@@ -104,6 +104,7 @@ import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import Header from '../components/Header';
 import { Rocket, Star, Globe, Zap, Sparkles, Moon, Sun, Satellite, Orbit, Telescope, Brain } from 'lucide-react';
+import rocketImg from '../assets/rocket.png';
 
 const countries = [
   'USA', 'Russia', 'China', 'India', 'UK', 'France', 'Germany', 'Japan', 'Canada', 'Italy'
@@ -214,67 +215,63 @@ const ParticleOrbit = ({ size = 'small', color = 'blue', delay = 0 }) => {
 };
 
 export default function Home() {
+  // Always show rocket animation on every reload
   const [showRocketAnimation, setShowRocketAnimation] = useState(true);
 
-  // Hide rocket animation after 4 seconds
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setShowRocketAnimation(false);
-    }, 4000);
-    return () => clearTimeout(timer);
-  }, []);
+    if (showRocketAnimation) {
+      // Show animation for 1 second, then hide
+      const timer = setTimeout(() => {
+        setShowRocketAnimation(false);
+      }, 2000);
+      return () => clearTimeout(timer);
+    }
+  }, [showRocketAnimation]);
 
   return (
     <div className="relative min-h-screen bg-gradient-to-b from-gray-900 via-blue-900 to-purple-900 overflow-hidden">
-      {/* Header */}
-      <Header />
-      
-      {/* Rocket Launch Animation */}
+      {/* Rocket Launch Animation - always on top, before anything else */}
       {showRocketAnimation && (
-        <div className="fixed inset-0 z-50 pointer-events-none">
-          {/* Rocket */}
-          <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 animate-rocket-launch">
-            <div className="relative">
-              {/* Rocket Body */}
-              <div className="w-8 h-24 bg-gradient-to-b from-white via-gray-200 to-gray-300 rounded-t-full relative">
+        <div className="fixed inset-0 z-50 flex items-end justify-center pointer-events-none overflow-hidden">
+          {/* Centered Rocket - exactly horizontal center at the bottom */}
+          <div className="absolute left-1/2 bottom-0 -translate-x-1/2 flex flex-col items-center">
+            <div className="relative animate-rocket-launch flex flex-col items-center" style={{ bottom: 0 }}>
+              {/* Rocket Body (smaller, more beautiful) */}
+              <div className="w-8 h-24 bg-gradient-to-b from-white via-blue-200 to-blue-400 rounded-t-full shadow-2xl relative border-2 border-blue-400 rocket-glow">
                 {/* Rocket Windows */}
-                <div className="absolute top-4 left-1/2 transform -translate-x-1/2 w-4 h-4 bg-blue-400 rounded-full"></div>
-                <div className="absolute top-8 left-1/2 transform -translate-x-1/2 w-4 h-4 bg-blue-400 rounded-full"></div>
-                
+                <div className="absolute top-2 left-1/2 -translate-x-1/2 w-2.5 h-2.5 bg-cyan-300 rounded-full border-2 border-blue-200 shadow-lg"></div>
+                <div className="absolute top-6 left-1/2 -translate-x-1/2 w-2 h-2 bg-blue-200 rounded-full border border-blue-100 shadow-md"></div>
                 {/* Rocket Fins */}
-                <div className="absolute bottom-0 left-0 w-3 h-6 bg-red-500 transform -skew-x-12"></div>
-                <div className="absolute bottom-0 right-0 w-3 h-6 bg-red-500 transform skew-x-12"></div>
-                
-                {/* Rocket Tip */}
-                <div className="absolute -top-2 left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-b-8 border-l-transparent border-r-transparent border-b-white"></div>
+                <div className="absolute bottom-0 left-0 w-2 h-4 bg-gradient-to-br from-pink-500 to-yellow-400 -skew-x-12 shadow-xl rounded-bl border border-pink-300"></div>
+                <div className="absolute bottom-0 right-0 w-2 h-4 bg-gradient-to-bl from-pink-500 to-yellow-400 skew-x-12 shadow-xl rounded-br border border-pink-300"></div>
+                {/* Rocket Tip (colorful, glowing) */}
+                <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-0 h-0 border-l-2 border-r-2 border-b-4 border-l-transparent border-r-transparent border-b-pink-400 drop-shadow-[0_0_10px_rgba(236,72,153,0.7)]"></div>
+                {/* Glow */}
+                <div className="absolute inset-0 rounded-t-full bg-blue-200/40 blur-2xl animate-pulse"></div>
+                <div className="absolute inset-0 rounded-t-full bg-pink-200/20 blur-3xl animate-pulse" style={{ animationDelay: '0.5s' }}></div>
               </div>
-              
               {/* Engine Fire */}
-              <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2">
-                <div className="w-6 h-8 bg-gradient-to-t from-orange-500 via-yellow-400 to-transparent rounded-b-full animate-pulse"></div>
-                <div className="w-4 h-6 bg-gradient-to-t from-red-500 via-orange-400 to-transparent rounded-b-full animate-pulse" style={{ animationDelay: '0.2s' }}></div>
+              <div className="absolute bottom-0 left-1/2 -translate-x-1/2 z-10">
+                <div className="w-2.5 h-4 bg-gradient-to-t from-orange-400 via-yellow-300 to-transparent rounded-b-full animate-pulse blur-sm"></div>
+                <div className="w-2 h-2.5 bg-gradient-to-t from-pink-400 via-orange-300 to-transparent rounded-b-full animate-pulse blur-[2px]" style={{ animationDelay: '0.2s' }}></div>
+                <div className="w-1.5 h-2 bg-gradient-to-t from-yellow-300 via-pink-200 to-transparent rounded-b-full animate-pulse blur-[1px]" style={{ animationDelay: '0.4s' }}></div>
+              </div>
+              {/* Rocket Shadow */}
+              <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-6 h-1.5 bg-gradient-to-r from-blue-400/60 to-blue-900/60 rounded-full blur-2xl opacity-70"></div>
+              {/* Animated Smoke */}
+              <div className="relative -mt-1 flex flex-col items-center z-0">
+                <div className="w-10 h-3 bg-gradient-to-t from-gray-400 via-gray-300 to-transparent rounded-full animate-smoke-rise opacity-70 blur-lg"></div>
+                <div className="w-6 h-2 bg-gradient-to-t from-gray-500 via-gray-400 to-transparent rounded-full animate-smoke-rise opacity-50 blur-md" style={{ animationDelay: '0.5s' }}></div>
+                <div className="w-4 h-1 bg-gradient-to-t from-gray-600 via-gray-500 to-transparent rounded-full animate-smoke-rise opacity-30 blur-sm" style={{ animationDelay: '0.8s' }}></div>
               </div>
             </div>
           </div>
-          
-          {/* Smoke Trail */}
-          <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2">
-            <div className="w-12 h-32 bg-gradient-to-t from-gray-400 via-gray-300 to-transparent rounded-t-full animate-smoke-rise opacity-60"></div>
-            <div className="w-8 h-24 bg-gradient-to-t from-gray-500 via-gray-400 to-transparent rounded-t-full animate-smoke-rise opacity-40" style={{ animationDelay: '0.5s' }}></div>
-          </div>
-          
-          {/* Launch Platform */}
-          <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2">
-            <div className="w-20 h-4 bg-gradient-to-r from-gray-600 to-gray-800 rounded-t-full"></div>
-            <div className="w-16 h-2 bg-gradient-to-r from-gray-700 to-gray-900 rounded-t-full"></div>
-          </div>
-          
           {/* Particle Effects */}
-          <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2">
-            {Array.from({ length: 20 }, (_, i) => (
+          <div className="absolute bottom-0 left-1/2 -translate-x-1/2">
+            {Array.from({ length: 40 }, (_, i) => (
               <div
                 key={i}
-                className="absolute w-2 h-2 bg-yellow-400 rounded-full animate-particle-spread"
+                className="absolute w-2 h-2 bg-yellow-300 rounded-full animate-particle-spread"
                 style={{
                   left: `${Math.random() * 40 - 20}px`,
                   animationDelay: `${Math.random() * 2}s`,
@@ -283,154 +280,169 @@ export default function Home() {
               />
             ))}
           </div>
-          
-
         </div>
       )}
-      
-      {/* Animated Background */}
-      <div className="absolute inset-0">
-        <div className="absolute inset-0 bg-gradient-to-br from-indigo-900/50 via-purple-900/50 to-pink-900/50 animate-pulse"></div>
-        <div className="absolute inset-0 bg-gradient-to-tl from-cyan-900/30 via-transparent to-purple-900/30 animate-pulse" style={{ animationDelay: '1s' }}></div>
-      </div>
-      
-      {/* Star Field */}
-      <StarField />
-      
-      {/* Particle Orbits */}
-      <ParticleOrbit size="small" color="blue" delay={0} />
-      <ParticleOrbit size="medium" color="purple" delay={5} />
-      <ParticleOrbit size="large" color="pink" delay={10} />
-      <ParticleOrbit size="small" color="cyan" delay={15} />
-      
-      {/* Floating Cosmic Elements */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <FloatingPlanet delay={0} className="absolute top-20 left-10">
-          <div className="w-16 h-16 bg-gradient-to-br from-blue-400 to-purple-600 rounded-full shadow-2xl opacity-60 relative">
-            <div className="absolute inset-2 bg-gradient-to-tl from-blue-300 to-purple-400 rounded-full opacity-50"></div>
+      {/* Only render the rest of the page when the animation is done */}
+      {!showRocketAnimation && (
+        <>
+          <Header />
+          {/* Animated Background */}
+          <div className="absolute inset-0">
+            <div className="absolute inset-0 bg-gradient-to-br from-indigo-900/50 via-purple-900/50 to-pink-900/50 animate-pulse"></div>
+            <div className="absolute inset-0 bg-gradient-to-tl from-cyan-900/30 via-transparent to-purple-900/30 animate-pulse" style={{ animationDelay: '1s' }}></div>
           </div>
-        </FloatingPlanet>
-        <FloatingPlanet delay={1} className="absolute top-40 right-20">
-          <div className="w-12 h-12 bg-gradient-to-br from-yellow-400 to-orange-600 rounded-full shadow-2xl opacity-50 relative">
-            <div className="absolute inset-1 bg-gradient-to-tl from-yellow-300 to-orange-400 rounded-full opacity-60"></div>
-          </div>
-        </FloatingPlanet>
-        <FloatingPlanet delay={2} className="absolute bottom-40 left-20">
-          <div className="w-8 h-8 bg-gradient-to-br from-green-400 to-teal-600 rounded-full shadow-2xl opacity-40"></div>
-        </FloatingPlanet>
-        <FloatingPlanet delay={0.5} className="absolute bottom-60 right-10">
-          <div className="w-14 h-14 bg-gradient-to-br from-pink-400 to-red-600 rounded-full shadow-2xl opacity-45 relative">
-            <div className="absolute inset-2 bg-gradient-to-tl from-pink-300 to-red-400 rounded-full opacity-50"></div>
-          </div>
-        </FloatingPlanet>
-        <FloatingPlanet delay={1.5} className="absolute top-60 left-1/2">
-          <Satellite className="w-8 h-8 text-cyan-400 opacity-60 animate-spin" style={{ animationDuration: '10s' }} />
-        </FloatingPlanet>
-        <FloatingPlanet delay={2.5} className="absolute bottom-20 right-1/3">
-          <Telescope className="w-6 h-6 text-purple-400 opacity-50" />
-        </FloatingPlanet>
-      </div>
-
-      {/* Content */}
-      <div className="relative z-10 flex flex-col min-h-screen">
-        {/* Main Content */}
-        <main className="flex flex-col items-center justify-center flex-1 px-6 py-6 scroll-container">
-          {/* Hero Section */}
-          <div className="text-center mb-16 max-w-6xl">
-            <div className="relative mb-8">
-
-              {/* <h1 className="text-6xl md:text-8xl font-bold mb-6 bg-clip-text colorful-text">
-                <span className="inline-block animate-pulse">Space</span>
-                <span className="inline-block animate-pulse" style={{ animationDelay: '0.5s' }}>Explorer</span>
-                <span className="inline-block animate-pulse" style={{ animationDelay: '1s' }}> Hub</span>
-              </h1> */}
-
-              {/* <h1 className="text-6xl md:text-8xl font-bold mb-6 text-purple-500 animate-pulse drop-shadow-[0_0_10px_rgba(192,132,252,0.7)]">
-                <span className="inline-block">Space</span>
-                <span className="inline-block" style={{ animationDelay: '0.5s' }}>Explorer</span>
-                <span className="inline-block" style={{ animationDelay: '1s' }}> Hub</span>
-              </h1> */}
-
-              <h1 className="text-6xl md:text-8xl font-bold mb-22 text-purple-500 mt-20">
-                <span className="inline-block animate-pulse">Galact</span>
-                <span className="inline-block animate-pulse" style={{ animationDelay: '0.5s' }}>IQ</span>
-                {/* <span className="inline-block animate-pulse" style={{ animationDelay: '1s' }}> Hub</span> */}
-              </h1>
-
-
-              <div className="absolute -top-4 -right-4 animate-bounce">
-                <Rocket className="w-16 h-16 text-orange-400 transform rotate-45" />
+          
+          {/* Star Field */}
+          <StarField />
+          
+          {/* Particle Orbits */}
+          <ParticleOrbit size="small" color="blue" delay={0} />
+          <ParticleOrbit size="medium" color="purple" delay={5} />
+          <ParticleOrbit size="large" color="pink" delay={10} />
+          <ParticleOrbit size="small" color="cyan" delay={15} />
+          
+          {/* Floating Cosmic Elements */}
+          <div className="absolute inset-0 overflow-hidden pointer-events-none">
+            <FloatingPlanet delay={0} className="absolute top-20 left-10">
+              <div className="w-16 h-16 bg-gradient-to-br from-blue-400 to-purple-600 rounded-full shadow-2xl opacity-60 relative">
+                <div className="absolute inset-2 bg-gradient-to-tl from-blue-300 to-purple-400 rounded-full opacity-50"></div>
               </div>
-              <div className="absolute -bottom-4 -left-4 animate-bounce" style={{ animationDelay: '0.5s' }}>
-                <Orbit className="w-12 h-12 text-cyan-400" />
+            </FloatingPlanet>
+            <FloatingPlanet delay={1} className="absolute top-40 right-20">
+              <div className="w-12 h-12 bg-gradient-to-br from-yellow-400 to-orange-600 rounded-full shadow-2xl opacity-50 relative">
+                <div className="absolute inset-1 bg-gradient-to-tl from-yellow-300 to-orange-400 rounded-full opacity-60"></div>
               </div>
-            </div>
-            <div className="relative backdrop-blur-sm bg-black/20 rounded-3xl p-8 mb-8 border border-purple-500/30 shadow-2xl">
-              <div className="absolute inset-0 bg-gradient-to-r from-purple-500/10 to-pink-500/10 rounded-3xl"></div>
-              <p className="relative text-xl md:text-2xl text-gray-300 leading-relaxed">
-                🚀 Embark on an <span className="text-cyan-400 font-bold animate-pulse">infinite journey</span> through the cosmos! 
-                <br />
-                Discover profiles of <span className="text-purple-400 font-bold animate-pulse">legendary space pioneers</span> from around the world
-                <br />
-                and stay connected with the latest <span className="text-pink-400 font-bold animate-pulse">astronomical breakthroughs</span>. ✨
-              </p>
-            </div>
+            </FloatingPlanet>
+            <FloatingPlanet delay={2} className="absolute bottom-40 left-20">
+              <div className="w-8 h-8 bg-gradient-to-br from-green-400 to-teal-600 rounded-full shadow-2xl opacity-40"></div>
+            </FloatingPlanet>
+            <FloatingPlanet delay={0.5} className="absolute bottom-60 right-10">
+              <div className="w-14 h-14 bg-gradient-to-br from-pink-400 to-red-600 rounded-full shadow-2xl opacity-45 relative">
+                <div className="absolute inset-2 bg-gradient-to-tl from-pink-300 to-red-400 rounded-full opacity-50"></div>
+              </div>
+            </FloatingPlanet>
+            <FloatingPlanet delay={1.5} className="absolute top-60 left-1/2">
+              <Satellite className="w-8 h-8 text-cyan-400 opacity-60 animate-spin" style={{ animationDuration: '10s' }} />
+            </FloatingPlanet>
+            <FloatingPlanet delay={2.5} className="absolute bottom-20 right-1/3">
+              <Telescope className="w-6 h-6 text-purple-400 opacity-50" />
+            </FloatingPlanet>
           </div>
 
-          {/* Countries Section */}
-          <div className="mb-16 w-full max-w-7xl">
-            {/* <h2 className="text-4xl md:text-5xl font-bold mb-22 text-center bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
-              🌍 Explore by Country
-            </h2> */}
-            <h2 className="text-4xl md:text-5xl font-bold mb-22 text-center text-purple-500 ">
-              🌍 Explore by Country
-            </h2>
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 animate-fade-in">
-              {countries.map((country, index) => (
-                <CountryCard key={country} country={country} index={index} />
-              ))}
-            </div>
-          </div>
+          {/* Content */}
+          <div className="relative z-10 flex flex-col min-h-screen">
+            {/* Main Content */}
+            <main className="flex flex-col items-center justify-center flex-1 px-6 py-6 scroll-container">
+              {/* Hero Section */}
+              <div className="text-center mb-16 max-w-6xl">
+                <div className="relative mb-8">
 
-          {/* Action Buttons */}
-          <div className="flex flex-col md:flex-row gap-6 mb-12">
-            {/* News Button */}
-            <div className="transform hover:scale-105 transition-all duration-300">
-              <Link
-                to="/news"
-                className="group relative overflow-hidden bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 text-white px-16 py-6 rounded-full shadow-2xl hover:shadow-emerald-500/30 transition-all duration-300 border-2 border-emerald-400/50 hover:border-emerald-300 text-2xl font-bold"
-              >
-                <div className="absolute inset-0 bg-gradient-to-r from-emerald-400/20 to-cyan-400/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                <div className="relative z-10 flex items-center gap-4">
-                  <Star className="w-8 h-8 group-hover:rotate-180 transition-transform duration-500" />
-                  🌟 View Space News
-                  <Sparkles className="w-8 h-8 group-hover:animate-spin transition-transform duration-500" />
+                  {/* <h1 className="text-6xl md:text-8xl font-bold mb-6 bg-clip-text colorful-text">
+                    <span className="inline-block animate-pulse">Space</span>
+                    <span className="inline-block animate-pulse" style={{ animationDelay: '0.5s' }}>Explorer</span>
+                    <span className="inline-block animate-pulse" style={{ animationDelay: '1s' }}> Hub</span>
+                  </h1> */}
+
+                  {/* <h1 className="text-6xl md:text-8xl font-bold mb-6 text-purple-500 animate-pulse drop-shadow-[0_0_10px_rgba(192,132,252,0.7)]">
+                    <span className="inline-block">Space</span>
+                    <span className="inline-block" style={{ animationDelay: '0.5s' }}>Explorer</span>
+                    <span className="inline-block" style={{ animationDelay: '1s' }}> Hub</span>
+                  </h1> */}
+
+                  <h1 className="text-6xl md:text-8xl font-bold mb-22 text-purple-500 mt-20">
+                    <span className="inline-block animate-pulse">Galact</span>
+                    <span className="inline-block animate-pulse" style={{ animationDelay: '0.5s' }}>IQ</span>
+                    {/* <span className="inline-block animate-pulse" style={{ animationDelay: '1s' }}> Hub</span> */}
+                  </h1>
+
+
+                  <div className="absolute -top-4 -right-4 animate-bounce">
+                    <Rocket className="w-16 h-16 text-orange-400 transform rotate-45" />
+                  </div>
+                  <div className="absolute -bottom-4 -left-4 animate-bounce" style={{ animationDelay: '0.5s' }}>
+                    <Orbit className="w-12 h-12 text-cyan-400" />
+                  </div>
                 </div>
-              </Link>
-            </div>
+                <div className="relative backdrop-blur-sm bg-black/20 rounded-3xl p-8 mb-8 border border-purple-500/30 shadow-2xl">
+                  <div className="absolute inset-0 bg-gradient-to-r from-purple-500/10 to-pink-500/10 rounded-3xl"></div>
+                  <p className="relative text-xl md:text-2xl text-gray-300 leading-relaxed">
+                    🚀 Embark on an <span className="text-cyan-400 font-bold animate-pulse">infinite journey</span> through the cosmos! 
+                    <br />
+                    Discover profiles of <span className="text-purple-400 font-bold animate-pulse">legendary space pioneers</span> from around the world
+                    <br />
+                    and stay connected with the latest <span className="text-pink-400 font-bold animate-pulse">astronomical breakthroughs</span>. ✨
+                  </p>
+                </div>
+              </div>
 
+              {/* Countries Section */}
+              <div className="mb-16 w-full max-w-7xl">
+                {/* <h2 className="text-4xl md:text-5xl font-bold mb-22 text-center bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+                  🌍 Explore by Country
+                </h2> */}
+                <h2 className="text-4xl md:text-5xl font-bold mb-22 text-center text-purple-500 ">
+                  🌍 Explore by Country
+                </h2>
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 animate-fade-in">
+                  {countries.map((country, index) => (
+                    <CountryCard key={country} country={country} index={index} />
+                  ))}
+                </div>
+              </div>
 
+              {/* Action Buttons */}
+              <div className="flex flex-col md:flex-row gap-6 mb-12">
+                {/* News Button */}
+                <div className="transform hover:scale-105 transition-all duration-300">
+                  <Link
+                    to="/news"
+                    className="group relative overflow-hidden bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 text-white px-16 py-6 rounded-full shadow-2xl hover:shadow-emerald-500/30 transition-all duration-300 border-2 border-emerald-400/50 hover:border-emerald-300 text-2xl font-bold"
+                  >
+                    <div className="absolute inset-0 bg-gradient-to-r from-emerald-400/20 to-cyan-400/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    <div className="relative z-10 flex items-center gap-4">
+                      <Star className="w-8 h-8 group-hover:rotate-180 transition-transform duration-500" />
+                      🌟 View Space News
+                      <Sparkles className="w-8 h-8 group-hover:animate-spin transition-transform duration-500" />
+                    </div>
+                  </Link>
+                </div>
+                {/* Solar System 3D Button */}
+                <div className="transform hover:scale-105 transition-all duration-300">
+                  <Link
+                    to="/solar-system"
+                    className="group relative overflow-hidden bg-gradient-to-r from-yellow-400 via-pink-500 to-purple-600 text-white px-16 py-6 rounded-full shadow-2xl hover:shadow-yellow-500/30 transition-all duration-300 border-2 border-yellow-400/50 hover:border-yellow-300 text-2xl font-bold"
+                  >
+                    <div className="absolute inset-0 bg-gradient-to-r from-yellow-200/20 to-pink-200/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    <div className="relative z-10 flex items-center gap-4">
+                      <Sun className="w-8 h-8 group-hover:rotate-180 transition-transform duration-500" />
+                      🪐 3D View of the Solar System
+                      <Orbit className="w-8 h-8 group-hover:animate-spin transition-transform duration-500" />
+                    </div>
+                  </Link>
+                </div>
+              </div>
+
+              {/* Extra Content for Scrolling */}
+              {/* <div className="w-full max-w-4xl mb-16">
+                <div className="grid md:grid-cols-2 gap-8">
+                  <div className="backdrop-blur-sm bg-black/20 rounded-2xl p-6 border border-purple-500/30">
+                    <h3 className="text-2xl font-bold text-cyan-400 mb-4">🛰️ Latest Missions</h3>
+                    <p className="text-gray-300 leading-relaxed">
+                      Stay updated with the most recent space missions from agencies worldwide. From Mars rovers to space station expeditions, discover the cutting-edge of space exploration.
+                    </p>
+                  </div>
+                  <div className="backdrop-blur-sm bg-black/20 rounded-2xl p-6 border border-purple-500/30">
+                    <h3 className="text-2xl font-bold text-purple-400 mb-4">🔬 Research Hub</h3>
+                    <p className="text-gray-300 leading-relaxed">
+                      Dive deep into the scientific breakthroughs that are shaping our understanding of the universe. From quantum physics to astrophysics, explore the frontiers of knowledge.
+                    </p>
+                  </div>
+                </div>
+              </div> */}
+            </main>
           </div>
-
-          {/* Extra Content for Scrolling */}
-          {/* <div className="w-full max-w-4xl mb-16">
-            <div className="grid md:grid-cols-2 gap-8">
-              <div className="backdrop-blur-sm bg-black/20 rounded-2xl p-6 border border-purple-500/30">
-                <h3 className="text-2xl font-bold text-cyan-400 mb-4">🛰️ Latest Missions</h3>
-                <p className="text-gray-300 leading-relaxed">
-                  Stay updated with the most recent space missions from agencies worldwide. From Mars rovers to space station expeditions, discover the cutting-edge of space exploration.
-                </p>
-              </div>
-              <div className="backdrop-blur-sm bg-black/20 rounded-2xl p-6 border border-purple-500/30">
-                <h3 className="text-2xl font-bold text-purple-400 mb-4">🔬 Research Hub</h3>
-                <p className="text-gray-300 leading-relaxed">
-                  Dive deep into the scientific breakthroughs that are shaping our understanding of the universe. From quantum physics to astrophysics, explore the frontiers of knowledge.
-                </p>
-              </div>
-            </div>
-          </div> */}
-        </main>
-      </div>
+        </>
+      )}
 
       {/* Custom Animations and Beautiful Scrollbar */}
       <style>{`
@@ -525,7 +537,7 @@ export default function Home() {
         }
         
         .animate-rocket-launch {
-          animation: rocket-launch 4s ease-out forwards;
+          animation: rocket-launch 2s ease-out forwards;
         }
         
         .animate-smoke-rise {

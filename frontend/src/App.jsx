@@ -10,6 +10,10 @@ import AdminLogin from './pages/AdminLogin';
 import AdminDashboard from './pages/AdminDashboard';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useEffect, useRef } from 'react';
+import Quiz from './pages/Quiz';
+import PreHome from './pages/PreHome';
+import SolarSystem3D from './pages/SolarSystem3D';
 
 function App() {
   return (
@@ -17,13 +21,16 @@ function App() {
       <div className="min-h-screen bg-gray-50">
         <ToastContainer position="top-right" autoClose={2500} hideProgressBar={false} newestOnTop closeOnClick pauseOnFocusLoss draggable pauseOnHover />
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<PreHome />} />
+          <Route path="/home" element={<Home />} />
           <Route path="/country/:country" element={<CountryScientists />} />
           <Route path="/scientist/:id" element={<ScientistProfile />} />
           <Route path="/news" element={<NewsList />} />
           <Route path="/news/:id" element={<NewsArticle />} />
           <Route path="/favorites" element={<Favorites />} />
           <Route path="/space-facts" element={<SpaceFacts />} />
+          <Route path="/quiz" element={<Quiz />} />
+          <Route path="/solar-system" element={<SolarSystem3D />} />
           <Route path="/admin/login" element={<AdminLogin />} />
           <Route path="/admin/dashboard/*" element={<AdminDashboard />} />
         </Routes>

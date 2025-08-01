@@ -46,7 +46,7 @@ const Logo = ({ className = "", showText = true, size = "medium", linkToHome = t
 
   if (linkToHome) {
     return (
-      <Link to="/" className="hover:opacity-80 transition-opacity duration-200">
+      <Link to="/home" className="hover:opacity-80 transition-opacity duration-200">
         <LogoContent />
       </Link>
     );

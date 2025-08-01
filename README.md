@@ -9,6 +9,8 @@ GalactIQ is a full-stack web application that lets you:
 - Discover famous space scientists from around the world
 - Read and save the latest space news
 - Explore random space facts and images from NASA
+- Experience an interactive 3D solar system
+- Test your knowledge with space-themed quizzes
 - Enjoy a stunning, animated cosmic interface
 - Manage content and users (for admins)
 
@@ -28,6 +30,8 @@ Whether you're a space enthusiast, a student, or an admin managing content, Gala
 - **Star Favorites:** Click the star icon to save your favorite scientists and news articles for later reading
 - **View Favorites:** Access all your starred items in a dedicated favorites section
 - **Space Facts:** Click the "Space Facts" button to get a new, random fact and image from NASA's Astronomy Picture of the Day (APOD) API
+- **3D Solar System:** Explore an interactive 3D solar system with clickable planets, zoom controls, and detailed planet information
+- **Space Quiz:** Test your knowledge with an interactive quiz featuring questions about Indian space missions, scientists, and space facts
 - **Comment:** Join discussions by commenting on news articles and scientist profiles
 - **Enjoy Animations:** Experience a rocket launch animation and cosmic backgrounds for an immersive feel
 
@@ -68,6 +72,8 @@ Whether you're a space enthusiast, a student, or an admin managing content, Gala
 - **Comment System:** Discuss and share thoughts
 - **Responsive UI:** Works on all devices
 - **Error Handling:** Friendly error messages and fallback content
+- **3D Solar System:** Interactive 3D view of the solar system with integrated control panel
+- **Space Quiz:** Interactive quiz based on actual content available on the site
 
 ---
 
@@ -89,6 +95,8 @@ Whether you're a space enthusiast, a student, or an admin managing content, Gala
 ## 💡 Project Highlights
 - Modern, animated UI with a cosmic theme
 - Real NASA data integration
+- Interactive 3D solar system with detailed planet information
+- Space quiz with questions about Indian space missions and scientists
 - Robust favorites and comment systems
 - Admin panel for content management
 

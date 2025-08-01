@@ -197,10 +197,7 @@ export default function SpaceFacts() {
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
                     
-                    {/* Date Badge */}
-                    <div className="absolute top-4 left-4 bg-yellow-500/80 backdrop-blur-sm text-black px-4 py-2 rounded-xl font-semibold">
-                      {formatDate(currentFact.date)}
-                    </div>
+                    {/* Removed Date Badge */}
                     
                     {/* Copyright Badge */}
                     <div className="absolute top-4 right-4 bg-white/20 backdrop-blur-sm text-white px-3 py-1 rounded-lg text-sm">
@@ -248,7 +245,7 @@ export default function SpaceFacts() {
           {/* Back to Home */}
           <div className="text-center mt-12">
             <Link
-              to="/"
+              to="/home"
               className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-purple-500 to-blue-500 text-white font-semibold rounded-2xl hover:from-purple-600 hover:to-blue-600 transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-purple-500/25"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

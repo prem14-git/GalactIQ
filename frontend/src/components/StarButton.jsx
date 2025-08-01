@@ -1,6 +1,5 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import axios from 'axios';
-import { toast } from 'react-toastify';
 
 export default function StarButton({ type, itemId, initialFavorited = false, size = 'medium', onToggle }) {
   const [isFavorite, setIsFavorite] = useState(initialFavorited);
@@ -8,32 +7,23 @@ export default function StarButton({ type, itemId, initialFavorited = false, siz
 
   const handleToggleFavorite = async () => {
     if (!localStorage.getItem('userToken')) {
-      toast.error('Please login to add favorites');
+      alert('Please login to add favorites');
       return;
     }
-
     setLoading(true);
     try {
       const token = localStorage.getItem('userToken');
-      console.log('Sending favorite request:', { type, itemId });
-      
       const response = await axios.post('/api/users/favorites', 
         { type, itemId },
         { headers: { Authorization: `Bearer ${token}` } }
       );
-      
-      console.log('Favorite response:', response.data);
       setIsFavorite(response.data.isFavorite);
-      toast.success(response.data.message);
-      
-      // Call the onToggle callback if provided
       if (onToggle) {
         onToggle(type, itemId, response.data.isFavorite);
       }
     } catch (error) {
       console.error('Error toggling favorite:', error);
-      console.error('Error details:', error.response?.data);
-      toast.error('Failed to update favorites');
+      alert('Failed to update favorites');
     } finally {
       setLoading(false);
     }
@@ -57,7 +47,7 @@ export default function StarButton({ type, itemId, initialFavorited = false, siz
       <svg
         className={`${sizeClasses[size]} transition-all duration-300 ${
           isFavorite 
-            ? 'text-yellow-400 fill-current' 
+            ? 'text-yellow-400 fill-yellow-400' 
             : 'text-gray-400 hover:text-yellow-400 group-hover:scale-110'
         }`}
         fill={isFavorite ? 'currentColor' : 'none'}
