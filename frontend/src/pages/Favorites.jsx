@@ -34,7 +34,7 @@ export default function Favorites() {
       const response = await axios.get('/api/users/favorites', {
         headers: { Authorization: `Bearer ${token}` }
       });
-      console.log('Favorites response:', response.data);
+      // console.log('Favorites response:', response.data);
       setFavorites(response.data);
     } catch (error) {
       console.error('Error fetching favorites:', error);
