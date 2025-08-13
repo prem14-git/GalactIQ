@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
+import axios from 'axios';
 
 // Chart.js components
 import {
@@ -39,15 +40,9 @@ export default function Analytics() {
   const fetchAnalytics = async () => {
     try {
       const token = localStorage.getItem('adminToken');
-      const response = await fetch('/api/admin/analytics', {
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
+      const { data } = await axios.get('/api/admin/analytics', {
+        headers: { Authorization: `Bearer ${token}` },
       });
-      
-      if (!response.ok) throw new Error('Failed to fetch analytics');
-      
-      const data = await response.json();
       setAnalyticsData(data);
     } catch (error) {
       console.error('Error fetching analytics:', error);

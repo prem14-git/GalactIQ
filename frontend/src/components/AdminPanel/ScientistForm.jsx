@@ -10,12 +10,24 @@ export default function ScientistForm({ initial, onSave, onCancel }) {
   const [country, setCountry] = useState(initial?.country || COUNTRIES[0]);
   const [contributions, setContributions] = useState(initial?.contributions || '');
   const [photo, setPhoto] = useState(initial?.photo || '');
+  const [cloudinaryPublicId, setCloudinaryPublicId] = useState(initial?.cloudinary_public_id || '');
   const [saving, setSaving] = useState(false);
+
+  const handlePhotoUpload = (imageUrl, publicId) => {
+    setPhoto(imageUrl);
+    setCloudinaryPublicId(publicId);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSaving(true);
-    await onSave({ name, country, contributions, photo });
+    await onSave({ 
+      name, 
+      country, 
+      contributions, 
+      photo,
+      cloudinary_public_id: cloudinaryPublicId 
+    });
     setSaving(false);
   };
 
@@ -53,7 +65,7 @@ export default function ScientistForm({ initial, onSave, onCancel }) {
       </div>
       <div>
         <label className="block mb-1 font-semibold">Photo</label>
-        <ImageUpload onUpload={setPhoto} initialUrl={photo} />
+        <ImageUpload onUpload={handlePhotoUpload} initialUrl={photo} />
       </div>
       <div className="flex gap-2 mt-2">
         <button

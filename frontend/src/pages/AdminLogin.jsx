@@ -68,6 +68,7 @@ export default function AdminLogin() {
           </button>
         </div>
       </div>
+      <h4 className='text-gray-500 text-sm'>Username : prem , Password : 1</h4>
     </div>
   );
 } 

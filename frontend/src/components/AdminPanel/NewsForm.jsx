@@ -6,12 +6,24 @@ export default function NewsForm({ initial, onSave, onCancel }) {
   const [date, setDate] = useState(initial?.date ? initial.date.slice(0, 10) : '');
   const [description, setDescription] = useState(initial?.description || '');
   const [image, setImage] = useState(initial?.image || '');
+  const [cloudinaryPublicId, setCloudinaryPublicId] = useState(initial?.cloudinary_public_id || '');
   const [saving, setSaving] = useState(false);
+
+  const handleImageUpload = (imageUrl, publicId) => {
+    setImage(imageUrl);
+    setCloudinaryPublicId(publicId);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSaving(true);
-    await onSave({ title, date, description, image });
+    await onSave({ 
+      title, 
+      date, 
+      description, 
+      image,
+      cloudinary_public_id: cloudinaryPublicId 
+    });
     setSaving(false);
   };
 
@@ -47,7 +59,7 @@ export default function NewsForm({ initial, onSave, onCancel }) {
       </div>
       <div>
         <label className="block mb-1 font-semibold">Image</label>
-        <ImageUpload onUpload={setImage} initialUrl={image} />
+        <ImageUpload onUpload={handleImageUpload} initialUrl={image} />
       </div>
       <div className="flex gap-2 mt-2">
         <button

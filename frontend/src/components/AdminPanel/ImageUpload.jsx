@@ -22,7 +22,8 @@ export default function ImageUpload({ onUpload, initialUrl }) {
         },
       });
       setImageUrl(res.data.imageUrl);
-      onUpload(res.data.imageUrl);
+      // Pass both URL and public_id to parent component
+      onUpload(res.data.imageUrl, res.data.public_id);
       toast.success('Image uploaded!');
     } catch {
       toast.error('Image upload failed');

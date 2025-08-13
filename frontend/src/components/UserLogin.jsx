@@ -143,7 +143,7 @@ export default function UserLogin({ open, onClose, onSuccess }) {
       aria-labelledby="login-modal-title"
       aria-modal="true"
     >
-      <style jsx>{`
+      <style>{`
         ::-webkit-scrollbar {
           width: 8px;
         }

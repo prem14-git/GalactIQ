@@ -1,4 +1,5 @@
 import News from '../models/News.js';
+import { deleteFromCloudinary } from '../utils/uploadToCloudinary.js';
 
 // GET /api/news?search=...
 export const getNews = async (req, res) => {
@@ -21,8 +22,14 @@ export const getNews = async (req, res) => {
 // POST /api/news
 export const createNews = async (req, res) => {
   try {
-    const { title, image, description, date } = req.body;
-    const news = new News({ title, image, description, date });
+    const { title, image, description, date, cloudinary_public_id } = req.body;
+    const news = new News({ 
+      title, 
+      image, 
+      description, 
+      date,
+      cloudinary_public_id 
+    });
     await news.save();
     res.status(201).json(news);
   } catch (err) {
@@ -34,8 +41,21 @@ export const createNews = async (req, res) => {
 export const updateNews = async (req, res) => {
   try {
     const { id } = req.params;
+    const { cloudinary_public_id: newPublicId } = req.body;
+    
+    // Get the current news to check if we need to delete old image
+    const currentNews = await News.findById(id);
+    if (!currentNews) {
+      return res.status(404).json({ error: 'News not found' });
+    }
+    
+    // If there's a new image and old image exists, delete the old one from Cloudinary
+    if (newPublicId && currentNews.cloudinary_public_id && 
+        newPublicId !== currentNews.cloudinary_public_id) {
+      await deleteFromCloudinary(currentNews.cloudinary_public_id);
+    }
+    
     const updated = await News.findByIdAndUpdate(id, req.body, { new: true });
-    if (!updated) return res.status(404).json({ error: 'News not found' });
     res.json(updated);
   } catch (err) {
     res.status(400).json({ error: 'Invalid data' });
@@ -46,8 +66,17 @@ export const updateNews = async (req, res) => {
 export const deleteNews = async (req, res) => {
   try {
     const { id } = req.params;
-    const deleted = await News.findByIdAndDelete(id);
-    if (!deleted) return res.status(404).json({ error: 'News not found' });
+    const news = await News.findById(id);
+    if (!news) {
+      return res.status(404).json({ error: 'News not found' });
+    }
+    
+    // Delete image from Cloudinary if it exists
+    if (news.cloudinary_public_id) {
+      await deleteFromCloudinary(news.cloudinary_public_id);
+    }
+    
+    await News.findByIdAndDelete(id);
     res.json({ message: 'News deleted' });
   } catch (err) {
     res.status(400).json({ error: 'Invalid request' });
