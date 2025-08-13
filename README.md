@@ -1,5 +1,7 @@
 # GalactIQ 🚀
 Live : https://galactiq-1c20e.web.app/
+
+
 GalactIQ is a modern, interactive web platform for exploring the wonders of space, legendary scientists, and the latest cosmic news. It is designed for both everyday users and administrators, with beautiful visuals, real NASA data, and a robust favorites system.
 
 ---
